@@ -1,18 +1,23 @@
 import { useState } from 'react'
 import ShoppingListProvider from '../../contex/ShoppingListProvider'
 import ShoppingList from '../ShoppingList/ShoppingList'
-
+import AddItemForm from '../AddItemForm/AddItemForm'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-    <ShoppingListProvider>
-    <ShoppingList/>
-
-    </ShoppingListProvider>
-    <p>hola</p>
+      <BrowserRouter>
+      <ShoppingListProvider>
+        <Routes>
+          <Route>
+            <Route path="/" element={< ShoppingList />} />
+            <Route path="/agregar" element={< AddItemForm />} />
+          </Route>
+        </Routes>
+        </ShoppingListProvider>
+      </BrowserRouter>
     </>
   )
 }
