@@ -7,16 +7,15 @@ const ShoppingListProvider = ({children}) => {
     const [Check , setCheck] = useState('')
     const [ Productos , setProductos] = useState([])
     const [ contador , setContador] = useState(0)
-    const [ comparacion , setComparacion] = useState('')
-    
-
+    const [ sacarBoleano , setSacarBoleano ] = useState()
+    console.log(sacarBoleano, 'soy boleano')
     // Agrega un nuevo artículo a la lista.
     const agregarItem = () =>{
 
     const useForm = {
         Producto: Producto,
-        id: id,
-        contador: contador
+        id: contador + 1,
+        comprado: false
     }
     setProductos([...Productos, useForm])
         setContador(contador + 1)
@@ -24,15 +23,21 @@ const ShoppingListProvider = ({children}) => {
 
     //Elimina un artículo de la lista.
     const eliminarItem = (tema) => {
-        
         const filtrarProducto = Productos.filter(item => item.Producto !== tema);
         setProductos(filtrarProducto)
+        setContador(contador - 1)
     }
 
     //Marca o desmarca un artículo como comprado.
     const marcarComoComprado = (id) => {
-        const subrayar = Productos.filter(item => item.Producto === id)
-        setProductos(subrayar)
+        const array = [...Productos]
+        let encontrara = array.findIndex((e ) => e.id === id)
+        array[encontrara].comprado === true ? array[encontrara].comprado = false
+        :array[encontrara].comprado = true
+        console.log(array, 'soy array')
+        setSacarBoleano(array.map((comprados) => (comprados.comprado)))
+        setProductos(array)
+
 
     }
     return (
@@ -42,9 +47,8 @@ const ShoppingListProvider = ({children}) => {
             setCheck,
             agregarItem,
             Productos,
-            setComparacion,
             eliminarItem,
-            marcarComoComprado
+            marcarComoComprado, 
         }}>
             {children}
         </ShopingContex.Provider>
